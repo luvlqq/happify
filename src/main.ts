@@ -1,7 +1,7 @@
 import type { FastifyCookieOptions } from '@fastify/cookie';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@nestjs/platform-fastify';
 
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './exceptionFilters';
 import { setupSwagger, sigInt, sigTerm } from './utils';
 
 async function bootstrap() {
@@ -22,6 +23,12 @@ async function bootstrap() {
   const logger = new Logger();
 
   app.enableShutdownHooks();
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
+  app.useGlobalFilters(new HttpExceptionFilter());
   await app.register(cors, { origin: true });
   await app.register(cookie, {
     secret: 'my-secret',
