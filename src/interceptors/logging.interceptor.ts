@@ -17,6 +17,7 @@ export class LoggingInterceptor implements NestInterceptor {
     if (context.getType() === 'http') {
       return this.logHttpCall(context, next);
     }
+    return next.handle();
   }
 
   private logHttpCall(context: ExecutionContext, next: CallHandler) {
