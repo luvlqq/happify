@@ -10,7 +10,7 @@ import {
 } from '@nestjs/platform-fastify';
 
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './exceptionFilters';
+import { HttpExceptionFilter } from './app/exceptionFilters';
 import { setupSwagger, sigInt, sigTerm } from './utils';
 
 async function bootstrap() {

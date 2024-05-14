@@ -5,19 +5,16 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TerminusModule } from '@nestjs/terminus';
 
 import { AppController } from './app.controller';
-import { HttpExceptionFilter } from './exceptionFilters';
-import { LoggingInterceptor } from './interceptors';
-import { AuthModule } from './modules/auth/auth.module';
-import { AwsModule } from './modules/aws/aws.module';
-import { ExercisesModule } from './modules/exercises/exercises.module';
-import { MealsModule } from './modules/meals/meals.module';
-import { NotificationsModule } from './modules/notifications/notifications.module';
-import { NutritionModule } from './modules/nutrition/nutrition.module';
-import { PrismaModule } from './modules/prisma/prisma.module';
-import { StripeModule } from './modules/stripe/stripe.module';
-import { UsersModule } from './modules/users/users.module';
-import { WinstonLoggerModule } from './modules/winston/winston.module';
-import { WorkoutsModule } from './modules/workouts/workouts.module';
+import { HttpExceptionFilter } from './app/exceptionFilters';
+import { LoggingInterceptor } from './app/interceptors';
+import { AuthModule } from './app/modules/auth/auth.module';
+import { ExercisesModule } from './app/modules/exercises/exercises.module';
+import { MealsModule } from './app/modules/meals/meals.module';
+import { NotificationsModule } from './app/modules/notifications/notifications.module';
+import { NutritionModule } from './app/modules/nutrition/nutrition.module';
+import { UsersModule } from './app/modules/users/users.module';
+import { WorkoutsModule } from './app/modules/workouts/workouts.module';
+import { LibsModule } from './libs/libs.module';
 
 @Module({
   imports: [
@@ -26,18 +23,15 @@ import { WorkoutsModule } from './modules/workouts/workouts.module';
       isGlobal: true,
     }),
     AuthModule,
-    AwsModule,
     UsersModule,
     WorkoutsModule,
     ExercisesModule,
     NutritionModule,
     MealsModule,
     NotificationsModule,
-    StripeModule,
     TerminusModule,
     HttpModule,
-    PrismaModule,
-    WinstonLoggerModule,
+    LibsModule,
   ],
   controllers: [AppController],
   providers: [
