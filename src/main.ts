@@ -1,6 +1,6 @@
-import type { FastifyCookieOptions } from '@fastify/cookie';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
+import multiPart from '@fastify/multipart';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -8,9 +8,9 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { HttpExceptionFilter } from '@shared/exceptions';
 
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './app/exceptionFilters';
 import { setupSwagger, sigInt, sigTerm } from './utils';
 
 async function bootstrap() {
@@ -29,11 +29,9 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+  await app.register(multiPart);
   await app.register(cors, { origin: true });
-  await app.register(cookie, {
-    secret: 'my-secret',
-    parseOptions: {},
-  } as FastifyCookieOptions);
+  await app.register(cookie);
 
   setupSwagger(app);
   sigInt(app);
@@ -42,4 +40,5 @@ async function bootstrap() {
   logger.log(`Server start in localhost:${PORT}`, 'Application Bootstrap');
   await app.listen(PORT || 3000);
 }
+
 bootstrap();

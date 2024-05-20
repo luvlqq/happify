@@ -4,4 +4,20 @@ services:
     image: redis:alpine
     ports:
       - '6379:6379'
-  
+
+  postgres:
+    image: postgres:15
+    restart: always
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+
+  postgres_admin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - '15432:80'
