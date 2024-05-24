@@ -84,19 +84,24 @@ export class AuthService implements IAuthInterface {
       newUser.role,
     );
 
-    await Promise.all([
-      this.jwtTokenService.updateRtHash(newUser.id, tokens.refreshToken),
-      this.jwtTokenService.putTokensToCookies(
-        newUser.id,
-        newUser.email,
-        newUser.role,
-        res,
-      ),
-    ]);
+    await this.jwtTokenService.updateRtHash(newUser.id, tokens.refreshToken);
+    await this.jwtTokenService.putTokensToCookies(
+      newUser.id,
+      newUser.email,
+      newUser.role,
+      res,
+    );
   }
 
   public async hashData(data: string): Promise<string> {
     const saltOrRounds = 10;
     return await bcrypt.hash(data, saltOrRounds);
+  }
+
+  getUserData(
+    id: number,
+    email: string,
+  ): Promise<{ id: number; email: string }> {
+    return Promise.resolve({ email: email, id: id });
   }
 }

@@ -82,9 +82,11 @@ export class JwtTokensService {
     if (!user) {
       throw new NotFoundException('User are not exist');
     }
+
     if (!user.hashRt) {
-      throw new BadRequestException('User has not refresh token');
+      throw new NotFoundException('No hash rt');
     }
+
     const rtMatches = await bcrypt.compare(rt, user.hashRt);
     if (!rtMatches) {
       throw new BadRequestException('Tokens are not the same!');

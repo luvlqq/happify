@@ -9,9 +9,9 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { HttpExceptionFilter } from '@shared/exceptions';
+import { setupSwagger, sigInt, sigTerm } from '@utils';
 
 import { AppModule } from './app.module';
-import { setupSwagger, sigInt, sigTerm } from './utils';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
