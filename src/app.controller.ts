@@ -1,12 +1,13 @@
+import { PrismaService } from '@libs/prisma/prisma.service';
 import { Controller, Get } from '@nestjs/common';
+import { RedisOptions, Transport } from '@nestjs/microservices';
 import {
   HealthCheck,
   HealthCheckService,
   MemoryHealthIndicator,
+  MicroserviceHealthIndicator,
   PrismaHealthIndicator,
 } from '@nestjs/terminus';
-
-import { PrismaService } from '@libs/prisma/prisma.service';
 
 @Controller('health')
 export class AppController {
@@ -15,16 +16,31 @@ export class AppController {
     private prismaHealthIndicator: PrismaHealthIndicator,
     private memoryHealthIndicator: MemoryHealthIndicator,
     private prismaService: PrismaService,
+    private microservice: MicroserviceHealthIndicator,
   ) {}
 
   @Get()
   @HealthCheck()
   public async getHealth() {
     return this.health.check([
-      () =>
-        this.prismaHealthIndicator.pingCheck('database', this.prismaService),
-      () =>
-        this.memoryHealthIndicator.checkHeap('memory heap', 300 * 1024 * 1024),
+      async () =>
+        await this.prismaHealthIndicator.pingCheck(
+          'database',
+          this.prismaService,
+        ),
+      async () =>
+        await this.memoryHealthIndicator.checkHeap(
+          'memory heap',
+          300 * 1024 * 1024,
+        ),
+      async () =>
+        await this.microservice.pingCheck<RedisOptions>('redis', {
+          transport: Transport.REDIS,
+          options: {
+            host: 'localhost',
+            port: 6379,
+          },
+        }),
     ]);
   }
 }
