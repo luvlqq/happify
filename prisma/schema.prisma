@@ -27,7 +27,21 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Audit {
+  id        Int      @unique @default(autoincrement())
+  action    Action
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   ADMIN
   USER
+}
+
+enum Action {
+  CREATE
+  UPDATE
+  DELETE
+  ERROR
 }

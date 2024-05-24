@@ -30,6 +30,18 @@
       "@shared/*": [
         "src/app/shared/*"
       ],
+      "@utils": [
+        "src/utils"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@modules": [
+        "src/app/modules"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ]
     }
   }
 }
