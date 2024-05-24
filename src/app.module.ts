@@ -8,13 +8,13 @@ import { HttpExceptionFilter } from '@shared/exceptions';
 import { LoggingInterceptor } from '@shared/interceptors';
 
 import { AppController } from './app.controller';
-import { AuthModule } from './app/modules/auth/auth.module';
-import { ExercisesModule } from './app/modules/exercises/exercises.module';
-import { MealsModule } from './app/modules/meals/meals.module';
-import { NotificationsModule } from './app/modules/notifications/notifications.module';
-import { NutritionModule } from './app/modules/nutrition/nutrition.module';
-import { UsersModule } from './app/modules/users/users.module';
-import { WorkoutsModule } from './app/modules/workouts/workouts.module';
+import { AuthModule } from '@modules/auth/auth.module';
+import { ExercisesModule } from '@modules/exercises/exercises.module';
+import { MealsModule } from '@modules/meals/meals.module';
+import { NotificationsModule } from '@modules/notifications/notifications.module';
+import { NutritionModule } from '@modules/nutrition/nutrition.module';
+import { UsersModule } from '@modules/users/users.module';
+import { WorkoutsModule } from '@modules/workouts/workouts.module';
 
 @Module({
   imports: [

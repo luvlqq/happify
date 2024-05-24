@@ -1,9 +1,19 @@
-import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { getUserData } from '@shared/decorators';
 import { FastifyReply } from 'fastify';
 
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
+import { JwtAuthGuard } from './guard';
 import { AuthSwaggerLogin, AuthSwaggerRegister } from './swagger';
 import { IAuthInterface } from './types';
 
@@ -30,5 +40,14 @@ export class AuthController implements IAuthInterface {
     @Res({ passthrough: true }) response: FastifyReply,
   ): Promise<void> {
     await this.authService.login(dto, response);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('user-data')
+  public async getUserData(
+    @getUserData('sub') id: number,
+    @getUserData('email') email: string,
+  ): Promise<{ id: number; email: string }> {
+    return { id: id, email: email };
   }
 }
