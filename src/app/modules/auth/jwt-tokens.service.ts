@@ -17,6 +17,7 @@ export class JwtTokensService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly repository: AuthRepository,
+    private readonly config: ConfigService,
   ) {}
 
   public async signToken(
@@ -55,23 +56,13 @@ export class JwtTokensService {
     };
   }
 
-  public async accessTokenCookie(
+  public async tokenToCookie(
     res: FastifyReply | undefined,
-    accessToken: string,
+    tokenType: 'accessToken' | 'refreshToken',
+    token: string,
   ): Promise<void> {
     if (!res) throw new BadRequestException('Response is not defined');
-    res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: true,
-    });
-  }
-
-  public async refreshTokenCookie(
-    res: FastifyReply | undefined,
-    refreshToken: string,
-  ): Promise<void> {
-    if (!res) throw new BadRequestException('Response is not defined');
-    res.cookie('refreshToken', refreshToken, {
+    res.cookie(tokenType, token, {
       httpOnly: true,
       secure: true,
     });
@@ -102,8 +93,8 @@ export class JwtTokensService {
     res?: FastifyReply,
   ): Promise<void> {
     const tokens = await this.signToken(userId, email, role);
-    await this.accessTokenCookie(res, tokens.accessToken);
-    await this.refreshTokenCookie(res, tokens.refreshToken);
+    await this.tokenToCookie(res, 'accessToken', tokens.accessToken);
+    await this.tokenToCookie(res, 'refreshToken', tokens.refreshToken);
     await this.refreshTokens(userId, tokens.refreshToken);
   }
 
@@ -121,7 +112,7 @@ export class JwtTokensService {
   }
 
   public async hashData(data: string): Promise<string> {
-    const saltOrRounds = 10;
+    const saltOrRounds = this.config.get<number>('SALT_OR_ROUNDS') || 10;
     return await bcrypt.hash(data, saltOrRounds);
   }
 }

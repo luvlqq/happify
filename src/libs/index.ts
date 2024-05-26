@@ -1,3 +1,4 @@
+export * from './audit/audit.module';
 export * from './aws/aws.module';
 export * from './cache/cache.module';
 export * from './open-ai/openai.module';

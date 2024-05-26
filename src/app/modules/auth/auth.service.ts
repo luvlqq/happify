@@ -1,3 +1,5 @@
+import { AuditService } from '@libs/audit/audit.service';
+import { AuditActions } from '@libs/audit/types';
 import {
   BadRequestException,
   Inject,
@@ -5,6 +7,7 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { FastifyReply } from 'fastify';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
@@ -21,6 +24,8 @@ export class AuthService implements IAuthInterface {
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     private readonly repository: AuthRepository,
     private readonly jwtTokenService: JwtTokensService,
+    private readonly audit: AuditService,
+    private readonly config: ConfigService,
   ) {}
 
   public async login(
@@ -30,12 +35,20 @@ export class AuthService implements IAuthInterface {
     const user = await this.repository.getUserByEmail(dto.email);
 
     if (!user) {
+      await this.audit.createAuditLog(
+        AuditActions.ERROR,
+        `User not found ${dto.email}`,
+      );
       throw new NotFoundException('User not found');
     }
 
     const passwordMatches = await bcrypt.compare(dto.password, user.password);
 
     if (!passwordMatches) {
+      await this.audit.createAuditLog(
+        AuditActions.ERROR,
+        `Incorrect password ${dto.email}`,
+      );
       throw new BadRequestException('Incorrect password');
     }
 
@@ -56,8 +69,16 @@ export class AuthService implements IAuthInterface {
         ),
       ]);
 
+      await this.audit.createAuditLog(
+        AuditActions.CREATE,
+        `User logged in ${user.email}`,
+      );
       return { id: user.id, email: user.email, role: user.role };
     } catch (error) {
+      await this.audit.createAuditLog(
+        AuditActions.ERROR,
+        `Error signing tokens ${user.email}`,
+      );
       this.logger.error('Error signing tokens', error, { user });
       throw new UnprocessableEntityException(
         'An unexpected error occurred. Please try again later.',
@@ -76,8 +97,18 @@ export class AuthService implements IAuthInterface {
 
     const newUser = await this.repository.createUser(dto, hashedPassword);
 
-    if (!newUser) throw new BadRequestException('Error creating user');
+    if (!newUser) {
+      await this.audit.createAuditLog(
+        AuditActions.ERROR,
+        `Error creating user ${dto.email}`,
+      );
+      throw new BadRequestException('Error creating user');
+    }
 
+    await this.audit.createAuditLog(
+      AuditActions.CREATE,
+      `User created ${dto.email}`,
+    );
     const tokens = await this.jwtTokenService.signTokens(
       newUser.id,
       newUser.email,
@@ -94,7 +125,7 @@ export class AuthService implements IAuthInterface {
   }
 
   public async hashData(data: string): Promise<string> {
-    const saltOrRounds = 10;
+    const saltOrRounds = this.config.get('SALT_OR_ROUNDS') || 10;
     return await bcrypt.hash(data, saltOrRounds);
   }
 

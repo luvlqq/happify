@@ -30,6 +30,7 @@ model User {
 model Audit {
   id        Int      @unique @default(autoincrement())
   action    Action
+  text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

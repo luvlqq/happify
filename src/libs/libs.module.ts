@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import {
+  AuditModule,
   AwsModule,
   LocalCacheModule,
   OpenaiModule,
@@ -19,6 +20,7 @@ import {
     LocalCacheModule,
     QueueModule,
     OpenaiModule,
+    AuditModule,
   ],
 })
 export class LibsModule {}
