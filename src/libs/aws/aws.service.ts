@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { appendCurrentDateToFile } from '@utils/utils';
 import * as AWS from 'aws-sdk';
 import { Readable } from 'stream';
 
@@ -14,7 +15,7 @@ export class AwsService {
     endpoint: this.config.get<string>('ENDPOINT_URL'),
   });
 
-  public async uploadFile(file): Promise<string> {
+  public async uploadFile(file, userData?: string): Promise<string> {
     if (!file || !file.buffer) {
       throw new Error('File or file buffer is not valid');
     }
@@ -25,9 +26,13 @@ export class AwsService {
       body: Readable.from([fileBuffer]),
     };
 
+    const fileNameWithDate = userData
+      ? await appendCurrentDateToFile(file.originalname, userData)
+      : await appendCurrentDateToFile(file.originalname);
+
     const params: AWS.S3.PutObjectRequest = {
       Bucket: this.AWS_S3_BUCKET,
-      Key: file.originalname,
+      Key: fileNameWithDate,
       Body: media.body,
       ContentType: media.mimeType,
       ACL: 'public-read',
