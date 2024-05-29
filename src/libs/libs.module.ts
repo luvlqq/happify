@@ -8,6 +8,7 @@ import {
   PrismaModule,
   QueueModule,
   StripeModule,
+  TelegramModule,
   WinstonLoggerModule,
 } from './index';
 
@@ -21,6 +22,7 @@ import {
     QueueModule,
     OpenaiModule,
     AuditModule,
+    TelegramModule,
   ],
 })
 export class LibsModule {}

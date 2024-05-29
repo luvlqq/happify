@@ -5,4 +5,5 @@ export * from './open-ai/openai.module';
 export * from './prisma/prisma.module';
 export * from './queue/queue.module';
 export * from './stripe/stripe.module';
+export * from './telegram/telegram.module';
 export * from './winston/winston.module';
