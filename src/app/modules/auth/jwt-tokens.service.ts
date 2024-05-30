@@ -17,7 +17,6 @@ export class JwtTokensService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly repository: AuthRepository,
-    private readonly config: ConfigService,
   ) {}
 
   public async signToken(
@@ -112,7 +111,7 @@ export class JwtTokensService {
   }
 
   public async hashData(data: string): Promise<string> {
-    const saltOrRounds = this.config.get<number>('SALT_OR_ROUNDS') || 10;
+    const saltOrRounds = 10;
     return await bcrypt.hash(data, saltOrRounds);
   }
 }

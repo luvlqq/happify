@@ -10,3 +10,10 @@ export class ErrorType {
   @ApiProperty()
   path: string;
 }
+
+export const Roles = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+} as const;
+
+export type RoleType = keyof typeof Roles;

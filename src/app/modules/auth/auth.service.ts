@@ -7,7 +7,6 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { FastifyReply } from 'fastify';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
@@ -25,7 +24,6 @@ export class AuthService implements IAuthInterface {
     private readonly repository: AuthRepository,
     private readonly jwtTokenService: JwtTokensService,
     private readonly audit: AuditService,
-    private readonly config: ConfigService,
   ) {}
 
   public async login(
@@ -59,16 +57,13 @@ export class AuthService implements IAuthInterface {
         user.role,
       );
 
-      await Promise.all([
-        this.jwtTokenService.updateRtHash(user.id, tokens.refreshToken),
-        this.jwtTokenService.putTokensToCookies(
-          user.id,
-          user.email,
-          user.role,
-          res,
-        ),
-      ]);
-
+      await this.jwtTokenService.updateRtHash(user.id, tokens.refreshToken);
+      await this.jwtTokenService.putTokensToCookies(
+        user.id,
+        user.email,
+        user.role,
+        res,
+      );
       await this.audit.createAuditLog(
         AuditActions.CREATE,
         `User logged in ${user.email}`,
@@ -125,7 +120,7 @@ export class AuthService implements IAuthInterface {
   }
 
   public async hashData(data: string): Promise<string> {
-    const saltOrRounds = this.config.get('SALT_OR_ROUNDS') || 10;
+    const saltOrRounds = 10;
     return await bcrypt.hash(data, saltOrRounds);
   }
 
