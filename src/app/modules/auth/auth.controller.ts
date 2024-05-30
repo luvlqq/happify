@@ -28,9 +28,10 @@ export class AuthController implements IAuthInterface {
   @Post('register')
   public async register(
     @Body() dto: RegisterDto,
-    @Res({ passthrough: true }) response: FastifyReply,
+    @Res() response: FastifyReply,
   ): Promise<void> {
     await this.authService.register(dto, response);
+    return response.send(204);
   }
 
   @AuthSwaggerLogin()
@@ -38,9 +39,10 @@ export class AuthController implements IAuthInterface {
   @Post('login')
   public async login(
     @Body() dto: LoginDto,
-    @Res({ passthrough: true }) response: FastifyReply,
+    @Res() response: FastifyReply,
   ): Promise<void> {
     await this.authService.login(dto, response);
+    return response.send(204);
   }
 
   @UseGuards(JwtAuthGuard)

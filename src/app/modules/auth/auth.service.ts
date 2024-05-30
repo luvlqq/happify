@@ -47,7 +47,7 @@ export class AuthService implements IAuthInterface {
         AuditActions.ERROR,
         `Incorrect password ${dto.email}`,
       );
-      throw new BadRequestException('Incorrect password');
+      throw new BadRequestException('Incorrect email or password');
     }
 
     try {
