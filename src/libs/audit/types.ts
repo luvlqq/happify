@@ -3,6 +3,7 @@ export const AuditActions = {
   UPDATE: 'UPDATE',
   DELETE: 'DELETE',
   ERROR: 'ERROR',
+  SUCCESS: 'SUCCESS',
 } as const;
 
 export type AuditAction = keyof typeof AuditActions;

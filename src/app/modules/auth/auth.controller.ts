@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { getUserData, Role } from '@shared/decorators';
+import { GetUserData, Role } from '@shared/decorators';
 import { Roles } from '@shared/types';
 import { FastifyReply } from 'fastify';
 
@@ -49,8 +49,8 @@ export class AuthController implements IAuthInterface {
   @Role(Roles.USER)
   @Get('user-data')
   public async getUserData(
-    @getUserData('sub') id: number,
-    @getUserData('email') email: string,
+    @GetUserData('sub') id: number,
+    @GetUserData('email') email: string,
   ): Promise<{ id: number; email: string }> {
     return { id: id, email: email };
   }

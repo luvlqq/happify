@@ -65,7 +65,7 @@ export class AuthService implements IAuthInterface {
         res,
       );
       await this.audit.createAuditLog(
-        AuditActions.CREATE,
+        AuditActions.SUCCESS,
         `User logged in ${user.email}`,
       );
       return { id: user.id, email: user.email, role: user.role };
