@@ -40,6 +40,7 @@ model Audit {
 model UserHealthData {
   id     Int      @unique @default(autoincrement())
   age    DateTime
+  gender Gender
   weight Float
   height Float
   User   User     @relation(fields: [userId], references: [id])
@@ -59,6 +60,11 @@ enum UserAimEnum {
   LOSE
   MAINTAIN
   BALANCE
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 enum UserTrainingLevelEnum {
@@ -88,4 +94,5 @@ enum ActionEnum {
   UPDATE
   DELETE
   ERROR
+  SUCCESS
 }
