@@ -41,6 +41,7 @@
     "@nestjs/microservices": "^10.3.8",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-fastify": "^10.3.8",
+    "@nestjs/schedule": "^4.0.2",
     "@nestjs/swagger": "^7.3.1",
     "@nestjs/terminus": "^10.2.3",
     "@prisma/client": "^5.13.0",
@@ -59,6 +60,7 @@
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "shelljs": "^0.8.5",
     "uuid": "^9.0.1",
     "winston": "^3.13.0"
   },
@@ -72,6 +74,7 @@
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
     "@types/passport-jwt": "^4.0.1",
+    "@types/shelljs": "^0.8.15",
     "@types/supertest": "^6.0.0",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
