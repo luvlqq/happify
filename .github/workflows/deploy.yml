@@ -20,12 +20,16 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/checkout@v3
-      
-      - name: Use Node ${{ matrix.node-version }} to deploy to Docker Hub
+
+      - name: Deploy to Docker Hub
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev .
       - run: docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
       - run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
+
+      - name: Re deploy on Railway
+        uses: actions/checkout@v3
+      - run: railway deploy --image railway-image --token ${{ secrets.RAILWAY_TOKEN }} --service ${{ secrets.RAILWAY_SERVICE }}
 
