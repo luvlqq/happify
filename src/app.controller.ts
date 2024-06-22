@@ -1,5 +1,6 @@
 import { PrismaService } from '@libs/prisma/prisma.service';
 import { Controller, Get } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { RedisOptions, Transport } from '@nestjs/microservices';
 import {
   HealthCheck,
@@ -17,6 +18,7 @@ export class AppController {
     private memoryHealthIndicator: MemoryHealthIndicator,
     private prismaService: PrismaService,
     private microservice: MicroserviceHealthIndicator,
+    private readonly config: ConfigService,
   ) {}
 
   @Get()
@@ -37,8 +39,8 @@ export class AppController {
         await this.microservice.pingCheck<RedisOptions>('redis', {
           transport: Transport.REDIS,
           options: {
-            host: 'localhost',
-            port: 6379,
+            host: this.config.get('REDIS_HOST'),
+            port: this.config.get('REDIS_PORT'),
           },
         }),
     ]);

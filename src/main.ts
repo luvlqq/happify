@@ -29,16 +29,16 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.register(multiPart);
-  await app.register(cors, { origin: true });
   await app.register(cookie);
+  await app.register(multiPart);
+  await app.register(cors, { origin: true, credentials: true });
 
   setupSwagger(app);
   sigInt(app);
   sigTerm(app);
 
   logger.log(`Server start in localhost:${PORT}`, 'Application Bootstrap');
-  await app.listen(PORT || 3000);
+  await app.listen(PORT || 3000, '0.0.0.0');
 }
 
 bootstrap();
