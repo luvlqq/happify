@@ -7,8 +7,8 @@ export function setupSwagger(app: INestApplication): void {
   const port = config.get<number>('PORT');
   const documentBuilder = new DocumentBuilder()
     .setTitle('Happify API')
-    .setDescription('Happify API doc')
-    .setVersion('1.0');
+    .setDescription('Happify API documentation')
+    .setVersion('1.0.0');
 
   const document = SwaggerModule.createDocument(app, documentBuilder.build());
   SwaggerModule.setup('documentation', app, document);
