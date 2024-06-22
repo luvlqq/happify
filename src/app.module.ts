@@ -1,20 +1,22 @@
+import { LibsModule } from '@libs/libs.module';
+import { AuthModule } from '@modules/auth/auth.module';
+import { RolesGuard } from '@modules/auth/guard/roles.guard';
+import { ExercisesModule } from '@modules/exercises/exercises.module';
+import { MealsModule } from '@modules/meals/meals.module';
+import { NotificationsModule } from '@modules/notifications/notifications.module';
+import { NutritionModule } from '@modules/nutrition/nutrition.module';
+import { UsersModule } from '@modules/users/users.module';
+import { WorkoutsModule } from '@modules/workouts/workouts.module';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt';
 import { TerminusModule } from '@nestjs/terminus';
+import { HttpExceptionFilter } from '@shared/exceptions';
+import { LoggingInterceptor } from '@shared/interceptors';
 
 import { AppController } from './app.controller';
-import { LoggingInterceptor } from './interceptors';
-import { AuthModule } from './modules/auth/auth.module';
-import { AwsModule } from './modules/aws/aws.module';
-import { ExercisesModule } from './modules/exercises/exercises.module';
-import { MealsModule } from './modules/meals/meals.module';
-import { NotificationsModule } from './modules/notifications/notifications.module';
-import { NutritionModule } from './modules/nutrition/nutrition.module';
-import { StripeModule } from './modules/stripe/stripe.module';
-import { UsersModule } from './modules/users/users.module';
-import { WorkoutsModule } from './modules/workouts/workouts.module';
 
 @Module({
   imports: [
@@ -22,23 +24,31 @@ import { WorkoutsModule } from './modules/workouts/workouts.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
+    JwtModule.register({}),
+    TerminusModule,
+    HttpModule,
     AuthModule,
-    AwsModule,
     UsersModule,
     WorkoutsModule,
     ExercisesModule,
     NutritionModule,
     MealsModule,
     NotificationsModule,
-    StripeModule,
-    TerminusModule,
-    HttpModule,
+    LibsModule,
   ],
   controllers: [AppController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
