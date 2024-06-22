@@ -1,6 +1,9 @@
 name: Deploy
 
-on: [pull_request]
+on:
+    push:
+        branches:
+            - master
 
 jobs:
   build:
@@ -17,7 +20,8 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/checkout@v3
-      - name: Use Node ${{ matrix.node-version }}
+      
+      - name: Use Node ${{ matrix.node-version }} to deploy to Docker Hub
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
