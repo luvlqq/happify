@@ -25,9 +25,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev .
-      - run: docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
-      - run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
+      - run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_IMAGE }} .
+      - run: docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_IMAGE }} ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_IMAGE }}:latest
+      - run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_IMAGE }}:latest
 
       - name: Install Railway CLI
         run: npm i -g @railway/cli
