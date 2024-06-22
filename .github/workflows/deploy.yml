@@ -1,0 +1,22 @@
+name: Deploy
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev .
+      - run: docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
+      - run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
+
