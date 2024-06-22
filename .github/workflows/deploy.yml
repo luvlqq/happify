@@ -29,6 +29,11 @@ jobs:
       - run: docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
       - run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/happify-backend-dev:latest
 
+      - name: Install Railway CLI
+        run: npm i -g @railway/cli
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
       - name: Re deploy on Railway
         uses: actions/checkout@v3
       - run: railway deploy --image railway-image --token ${{ secrets.RAILWAY_TOKEN }} --service ${{ secrets.RAILWAY_SERVICE }}
