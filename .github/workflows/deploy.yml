@@ -36,5 +36,5 @@ jobs:
 
       - name: Re deploy on Railway
         uses: actions/checkout@v3
-      - run: railway up --service ${{ secrets.RAILWAY_SERVICE }} -d
+      - run: railway up --token ${{ secrets.RAILWAY_TOKEN }} --service ${{ secrets.RAILWAY_SERVICE }} -d
 
