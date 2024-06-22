@@ -64,6 +64,7 @@ export class JwtTokensService {
     res.cookie(tokenType, token, {
       httpOnly: true,
       secure: true,
+      path: '/',
     });
   }
 
