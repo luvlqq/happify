@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Patch,
   Post,
   UseGuards,
@@ -10,9 +11,11 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { GetUserData } from '@shared/decorators';
 
+import { UserHealthData } from './dto';
 import { UsersService } from './users.service';
 
 @ApiTags('Users')
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -22,43 +25,40 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
-  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
   @Get('me')
   public async getMe(@GetUserData('sub') id: number) {
     return this.usersService.getUser(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('health-data')
-  public async getUserHealthData() {
-    return this.usersService.getUserHealthData();
+  public async getUserHealthData(@GetUserData('sub') id: number) {
+    return this.usersService.getUserHealthData(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('health-data')
-  public async setUserHealthData() {
-    return this.usersService.setUserHealthData();
+  public async setUserHealthData(
+    @GetUserData('sub') id: number,
+    dto: UserHealthData,
+  ) {
+    return this.usersService.setUserHealthData(id, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch('health-data')
   public async updateUserHealthData() {
     return this.usersService.updateUserHealthData();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete('health-data')
   public async deleteUserHealthData() {
     return this.usersService.deleteUserHealthData();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('activity-data')
   public async getUserActivityData() {
     return this.usersService.getUserActivityData();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('workout-data')
   public async getUserWorkoutData() {
     return this.usersService.getUserWorkoutData();

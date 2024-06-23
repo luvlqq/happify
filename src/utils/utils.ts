@@ -13,3 +13,31 @@ export async function appendCurrentDateToFile(
     ? `${currentDate}_${word}_${userData}`
     : `${currentDate}_${word}`;
 }
+
+/**
+ * This function calculates the age of a user based on their birth date.
+ * @param birthDate The birth date of the user.
+ * @returns The age of the user.
+ */
+export async function calculateUserAge(birthDate: string): Promise<number> {
+  const today = new Date();
+  const birth = new Date(birthDate);
+  const age = today.getFullYear() - birth.getFullYear();
+  return today.getMonth() < birth.getMonth() ||
+    (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())
+    ? age - 1
+    : age;
+}
+
+/**
+ * This function calculates the BMI of a user based on their weight and height.
+ * @param weight The weight of the user.
+ * @param height The height of the user.
+ * @returns The BMI of the user.
+ */
+export async function calculateUserBmi(
+  weight: number,
+  height: number,
+): Promise<number> {
+  return weight / Math.pow(height / 100, 2);
+}

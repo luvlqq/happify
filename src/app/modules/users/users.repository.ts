@@ -1,6 +1,7 @@
 import { PrismaService } from '@libs/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 
+import { UserHealthData } from './dto';
 import { User } from '.prisma/client';
 
 @Injectable()
@@ -31,5 +32,14 @@ export class UsersRepository {
 
   public async getAllUsers() {
     return this.prisma.user.findMany();
+  }
+
+  //todo: create a new field in db for set user birth date and a new field for user age.
+  public async setHealthData(id: number, dto: UserHealthData) {
+    return this.prisma.userHealthData.create({
+      data: {
+        ...dto,
+      },
+    });
   }
 }
