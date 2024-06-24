@@ -20,6 +20,7 @@ async function bootstrap() {
   );
   const config = new ConfigService();
   const PORT = config.get<number>('PORT');
+  const NODE_ENV = config.get<string>('NODE_ENV') || 'development';
   const logger = new Logger();
 
   app.enableShutdownHooks();
@@ -38,7 +39,12 @@ async function bootstrap() {
   sigTerm(app);
 
   logger.log(`Server start in localhost:${PORT}`, 'Application Bootstrap');
-  await app.listen(PORT || 3000, '0.0.0.0');
+
+  if (NODE_ENV === 'production') {
+    await app.listen(PORT || 3000, '0.0.0.0');
+  } else {
+    await app.listen(PORT || 3000);
+  }
 }
 
 bootstrap();
