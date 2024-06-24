@@ -20,6 +20,7 @@ async function bootstrap() {
   );
   const config = new ConfigService();
   const PORT = config.get<number>('PORT');
+  const PROD_URL = config.get<string>('PROD_URL');
   const NODE_ENV = config.get<string>('NODE_ENV') || 'development';
   const logger = new Logger();
 
@@ -38,11 +39,17 @@ async function bootstrap() {
   sigInt(app);
   sigTerm(app);
 
-  logger.log(`Server start in localhost:${PORT}`, 'Application Bootstrap');
-
   if (NODE_ENV === 'production') {
+    logger.log(
+      `Server start in localhost:${PROD_URL}`,
+      'Application Bootstrap',
+    );
     await app.listen(PORT || 3000, '0.0.0.0');
   } else {
+    logger.log(
+      `Server start in http://localhost:${PORT}`,
+      'Application Bootstrap',
+    );
     await app.listen(PORT || 3000);
   }
 }
