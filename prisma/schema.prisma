@@ -38,13 +38,15 @@ model Audit {
 }
 
 model UserHealthData {
-  id     Int      @unique @default(autoincrement())
-  age    DateTime
-  gender Gender
-  weight Float
-  height Float
-  User   User     @relation(fields: [userId], references: [id])
-  userId Int      @unique
+  id          Int      @unique @default(autoincrement())
+  dateOfBirth String
+  age         Int
+  BMI         Float
+  gender      Gender
+  weight      Float
+  height      Float
+  User        User     @relation(fields: [userId], references: [id])
+  userId      Int      @unique
 }
 
 model UserAim {

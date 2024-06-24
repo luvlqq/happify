@@ -1,11 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Gender } from '@prisma/client';
-import { IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
 
 export class UserHealthData {
   @ApiProperty()
   @IsString()
-  age: string;
+  dateOfBirth: string;
 
   @ApiProperty()
   @IsNumber()
@@ -15,5 +15,9 @@ export class UserHealthData {
   @ApiProperty()
   height: number;
 
+  @ApiProperty()
+  @IsEnum(Gender)
   gender: Gender;
 }
+
+export class UpdateUserHealthData extends PartialType(UserHealthData) {}

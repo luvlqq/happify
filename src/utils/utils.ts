@@ -20,9 +20,11 @@ export async function appendCurrentDateToFile(
  * @returns The age of the user.
  */
 export async function calculateUserAge(birthDate: string): Promise<number> {
+  const [day, month, year] = birthDate.split('.').map(Number);
   const today = new Date();
-  const birth = new Date(birthDate);
+  const birth = new Date(year, month - 1, day);
   const age = today.getFullYear() - birth.getFullYear();
+
   return today.getMonth() < birth.getMonth() ||
     (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())
     ? age - 1
@@ -39,5 +41,5 @@ export async function calculateUserBmi(
   weight: number,
   height: number,
 ): Promise<number> {
-  return weight / Math.pow(height / 100, 2);
+  return Number((weight / Math.pow(height / 100, 2)).toFixed(2));
 }
