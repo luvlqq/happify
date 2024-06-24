@@ -17,12 +17,12 @@ export function setupSwagger(app: INestApplication): void {
 
   if (NODE_ENV === 'production') {
     Logger.log(
-      `Swagger locale on ${PROD_URL}/documentation`,
+      `Swagger locale on ${PROD_URL}documentation`,
       'Swagger Bootstrap',
     );
   } else {
     Logger.log(
-      `Swagger locale on http://localhost:${port}documentation`,
+      `Swagger locale on http://localhost:${port}/documentation`,
       'Swagger Bootstrap',
     );
   }
