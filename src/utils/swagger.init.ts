@@ -22,7 +22,7 @@ export function setupSwagger(app: INestApplication): void {
     );
   } else {
     Logger.log(
-      `Swagger locale on http://localhost:${port}/documentation`,
+      `Swagger locale on http://localhost:${port}documentation`,
       'Swagger Bootstrap',
     );
   }
