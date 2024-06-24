@@ -1,37 +1,79 @@
 import { UsersRepository } from '@modules/users/users.repository';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { calculateUserAge, calculateUserBmi } from '@utils/utils';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
+
+import { UpdateUserHealthData, UserHealthData } from './dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly repository: UsersRepository) {}
+  constructor(
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    private readonly repository: UsersRepository,
+  ) {}
 
-  public async getUsers() {
+  public async getUsers(): Promise<User[] | null> {
     try {
       return this.repository.getAllUsers();
     } catch (e) {
+      this.logger.error(e);
       throw new BadRequestException('Error getting users');
     }
   }
 
-  public async getUser(id: number) {
+  public async getUser(id: number): Promise<User | UserHealthData | null> {
     try {
       const user = await this.repository.getUserData(id);
       // delete user['password'];
       return user;
     } catch (e) {
+      this.logger.error(e);
       throw new BadRequestException('Error getting user');
     }
   }
 
-  public async getUserHealthData() {
-    return 'user health data';
+  public async getUserHealthData(
+    id: number,
+  ): Promise<User | UserHealthData | null> {
+    try {
+      return await this.repository.getUserData(id, true);
+    } catch (e) {
+      this.logger.error(e);
+      throw new BadRequestException('Error getting user health data');
+    }
   }
 
-  public async setUserHealthData() {}
+  public async setUserHealthData(id: number, dto: UserHealthData) {
+    try {
+      const userAge = await calculateUserAge(dto.dateOfBirth);
+      const userBmi = await calculateUserBmi(dto.weight, dto.height);
 
-  public async updateUserHealthData() {}
+      return await this.repository.setHealthData(id, dto, userAge, userBmi);
+    } catch (e) {
+      this.logger.error(e);
+      throw new BadRequestException('Error setting user health data');
+    }
+  }
 
-  public async deleteUserHealthData() {}
+  public async updateUserHealthData(id: number, dto: UpdateUserHealthData) {
+    try {
+      return this.repository.updateHealthData(id, dto);
+    } catch (e) {
+      this.logger.error(e);
+      throw new BadRequestException('Error while update user health data');
+    }
+  }
+
+  public async deleteUserHealthData(id: number) {
+    try {
+      return this.repository.deleteUserHealthData(id);
+    } catch (e) {
+      this.logger.error(e);
+      throw new BadRequestException('Error while delete user health data');
+    }
+  }
 
   public async getUserActivityData() {
     return 'user activity data';
@@ -40,8 +82,4 @@ export class UsersService {
   public async getUserWorkoutData() {
     return 'user workout data';
   }
-
-  private calculateUserAge() {}
-
-  private calculateUserBmi() {}
 }
