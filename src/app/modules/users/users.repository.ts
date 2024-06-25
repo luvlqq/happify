@@ -48,8 +48,12 @@ export class UsersRepository {
     }
   }
 
-  public async getAllUsers() {
-    return this.prisma.user.findMany();
+  public async getAllUsers(): Promise<
+    Pick<User, 'id' | 'firstName' | 'lastName'>[]
+  > {
+    return this.prisma.user.findMany({
+      select: { id: true, firstName: true, lastName: true },
+    });
   }
 
   public async setHealthData(
@@ -57,7 +61,7 @@ export class UsersRepository {
     dto: UserHealthData,
     age: number,
     bmi: number,
-  ) {
+  ): Promise<UserHealthData> {
     return await this.prisma.userHealthData.create({
       data: {
         ...dto,
@@ -68,14 +72,17 @@ export class UsersRepository {
     });
   }
 
-  public async updateHealthData(id: number, dto: UpdateUserHealthData) {
+  public async updateHealthData(
+    id: number,
+    dto: UpdateUserHealthData,
+  ): Promise<UserHealthData> {
     return await this.prisma.userHealthData.update({
       where: { userId: id },
       data: { ...dto },
     });
   }
 
-  public async deleteUserHealthData(id: number) {
+  public async deleteUserHealthData(id: number): Promise<UserHealthData> {
     return this.prisma.userHealthData.delete({ where: { id: id } });
   }
 }
