@@ -14,7 +14,9 @@ export class UsersService {
     private readonly repository: UsersRepository,
   ) {}
 
-  public async getUsers(): Promise<User[] | null> {
+  public async getUsers(): Promise<
+    Pick<User, 'id' | 'firstName' | 'lastName'>[] | null
+  > {
     try {
       return this.repository.getAllUsers();
     } catch (e) {
@@ -26,6 +28,7 @@ export class UsersService {
   public async getUser(id: number): Promise<User | UserHealthData | null> {
     try {
       const user = await this.repository.getUserData(id);
+      // TODO: delete user password from res
       // delete user['password'];
       return user;
     } catch (e) {
@@ -45,7 +48,10 @@ export class UsersService {
     }
   }
 
-  public async setUserHealthData(id: number, dto: UserHealthData) {
+  public async setUserHealthData(
+    id: number,
+    dto: UserHealthData,
+  ): Promise<UserHealthData> {
     try {
       const userAge = await calculateUserAge(dto.dateOfBirth);
       const userBmi = await calculateUserBmi(dto.weight, dto.height);
@@ -57,7 +63,10 @@ export class UsersService {
     }
   }
 
-  public async updateUserHealthData(id: number, dto: UpdateUserHealthData) {
+  public async updateUserHealthData(
+    id: number,
+    dto: UpdateUserHealthData,
+  ): Promise<UserHealthData> {
     try {
       return this.repository.updateHealthData(id, dto);
     } catch (e) {
@@ -66,7 +75,7 @@ export class UsersService {
     }
   }
 
-  public async deleteUserHealthData(id: number) {
+  public async deleteUserHealthData(id: number): Promise<UserHealthData> {
     try {
       return this.repository.deleteUserHealthData(id);
     } catch (e) {

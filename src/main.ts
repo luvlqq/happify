@@ -40,10 +40,7 @@ async function bootstrap() {
   sigTerm(app);
 
   if (NODE_ENV === 'production') {
-    logger.log(
-      `Server start in localhost:${PROD_URL}`,
-      'Application Bootstrap',
-    );
+    logger.log(`Server start in ${PROD_URL}`, 'Application Bootstrap');
     await app.listen(PORT || 3000, '0.0.0.0');
   } else {
     logger.log(
