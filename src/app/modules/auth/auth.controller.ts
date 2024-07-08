@@ -6,6 +6,7 @@ import {
   Post,
   Res,
   UseGuards,
+  Version,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GetUserData, Role } from '@shared/decorators';
@@ -53,5 +54,15 @@ export class AuthController implements IAuthInterface {
     @GetUserData('email') email: string,
   ): Promise<{ id: number; email: string }> {
     return { id: id, email: email };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Role(Roles.USER)
+  @Version('2')
+  @Get('user-data')
+  public async getUserData2(
+    @GetUserData('email') email: string,
+  ): Promise<{ email: string }> {
+    return { email: email };
   }
 }
