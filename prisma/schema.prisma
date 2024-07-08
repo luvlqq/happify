@@ -27,6 +27,8 @@ model User {
   updatedAt  DateTime        @updatedAt
   healthData UserHealthData?
   userAim    UserAim?
+
+  @@index([email, id], type: BTree)
 }
 
 model Audit {
