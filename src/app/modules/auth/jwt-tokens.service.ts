@@ -23,6 +23,7 @@ export class JwtTokensService {
     userId: number,
     email: string,
     role: string,
+    isPremium: boolean,
   ): Promise<Tokens> {
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(
@@ -30,6 +31,7 @@ export class JwtTokensService {
           sub: userId,
           email,
           role,
+          isPremium,
         },
         {
           secret: this.configService.get<string>('ATSECRET'),
@@ -41,6 +43,7 @@ export class JwtTokensService {
           sub: userId,
           email,
           role,
+          isPremium,
         },
         {
           secret: this.configService.get<string>('RTSECRET'),
@@ -82,7 +85,12 @@ export class JwtTokensService {
     if (!rtMatches) {
       throw new BadRequestException('Tokens are not the same!');
     }
-    const tokens = await this.signTokens(user.id, user.email, user.role);
+    const tokens = await this.signTokens(
+      user.id,
+      user.email,
+      user.role,
+      user.isPremium,
+    );
     await this.updateRtHash(user.id, tokens.refreshToken);
   }
 
@@ -90,9 +98,10 @@ export class JwtTokensService {
     userId: number,
     email: string,
     role: string,
+    isPremium: boolean,
     res?: FastifyReply,
   ): Promise<void> {
-    const tokens = await this.signToken(userId, email, role);
+    const tokens = await this.signToken(userId, email, role, isPremium);
     await this.tokenToCookie(res, 'accessToken', tokens.accessToken);
     await this.tokenToCookie(res, 'refreshToken', tokens.refreshToken);
     await this.refreshTokens(userId, tokens.refreshToken);
@@ -102,8 +111,9 @@ export class JwtTokensService {
     userId: number,
     email: string,
     role: string,
+    isPremium: boolean,
   ): Promise<Tokens> {
-    return this.signToken(userId, email, role);
+    return this.signToken(userId, email, role, isPremium);
   }
 
   public async updateRtHash(userId: number, rt: string): Promise<void> {
