@@ -8,7 +8,12 @@ export interface IAuthInterface {
   login(
     dto: LoginDto,
     reply: FastifyReply,
-  ): Promise<{ id: number; email: string; role: string } | void>;
+  ): Promise<{
+    id: number;
+    email: string;
+    role: string;
+    isPremium: boolean;
+  } | void>;
 
   getUserData(
     id: number,

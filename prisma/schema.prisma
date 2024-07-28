@@ -20,6 +20,7 @@ model User {
   password   String
   firstName  String
   lastName   String
+  isPremium  Boolean         @default(false)
   role       RoleEnum        @default(USER)
   hashRt     String?
   resetCode  String?
@@ -40,15 +41,15 @@ model Audit {
 }
 
 model UserHealthData {
-  id          Int      @unique @default(autoincrement())
+  id          Int    @unique @default(autoincrement())
   dateOfBirth String
   age         Int
   BMI         Float
   gender      Gender
   weight      Float
   height      Float
-  User        User     @relation(fields: [userId], references: [id])
-  userId      Int      @unique
+  User        User   @relation(fields: [userId], references: [id])
+  userId      Int    @unique
 }
 
 model UserAim {
@@ -57,6 +58,29 @@ model UserAim {
   level  UserTrainingLevelEnum
   User   User                  @relation(fields: [userId], references: [id])
   userId Int                   @unique
+}
+
+model Exercise {
+  id             Int              @unique @default(autoincrement())
+  name           String
+  image          String?
+  video          String?
+  description    String
+  instructions   String
+  difficulty     DifficultyLevels
+  groupOfMuscles MuscleGroup
+  repeats        Int?
+  sets           Int?
+  duration       Int
+  equipment      Boolean
+  place          Place
+  rating         Float
+  likes          Int
+  dislikes       Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([name, id], type: BTree)
 }
 
 enum UserAimEnum {
@@ -76,6 +100,29 @@ enum UserTrainingLevelEnum {
   INTERMEDIATE
   ADVANCED
   LIGHT_WEIGHT_BABY
+}
+
+enum MuscleGroup {
+  CHEST
+  BACK
+  SHOULDERS
+  BICEPS
+  TRICEPS
+  LEGS
+  ABS
+}
+
+enum Place {
+  HOME
+  GYM
+  OUTDOOR
+}
+
+enum DifficultyLevels {
+  Easy
+  Medium
+  Hard
+  Light_Weitgh_Baby
 }
 
 enum WorkType {
