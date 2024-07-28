@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { AuthRepository } from './auth.repository';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard, JwtRefreshGuard } from './guard';
+import { IsPremiumUserGuard } from './guard/isPremiumUser.guard';
 import { JwtTokensService } from './jwt-tokens.service';
 import { AtStrategy, RtStrategy } from './strategies';
 
@@ -24,6 +25,7 @@ import { AtStrategy, RtStrategy } from './strategies';
     RtStrategy,
     JwtAuthGuard,
     JwtRefreshGuard,
+    IsPremiumUserGuard,
     AuditService,
   ],
 })

@@ -20,6 +20,7 @@ model User {
   password   String
   firstName  String
   lastName   String
+  isPremium  Boolean         @default(false)
   role       RoleEnum        @default(USER)
   hashRt     String?
   resetCode  String?
@@ -60,7 +61,7 @@ model UserAim {
 }
 
 model Exercise {
-  id             Int      @unique @default(autoincrement())
+  id             Int              @unique @default(autoincrement())
   name           String
   image          String?
   video          String?
@@ -76,8 +77,8 @@ model Exercise {
   rating         Float
   likes          Int
   dislikes       Int
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 
   @@index([name, id], type: BTree)
 }

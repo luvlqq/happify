@@ -29,7 +29,12 @@ export class AuthService implements IAuthInterface {
   public async login(
     dto: LoginDto,
     res: FastifyReply,
-  ): Promise<{ id: number; email: string; role: string } | void> {
+  ): Promise<{
+    id: number;
+    email: string;
+    role: string;
+    isPremium: boolean;
+  } | void> {
     const user = await this.repository.getUserByEmail(dto.email);
 
     if (!user) {
@@ -55,6 +60,7 @@ export class AuthService implements IAuthInterface {
         user.id,
         user.email,
         user.role,
+        user.isPremium,
       );
 
       await this.jwtTokenService.updateRtHash(user.id, tokens.refreshToken);
@@ -62,13 +68,19 @@ export class AuthService implements IAuthInterface {
         user.id,
         user.email,
         user.role,
+        user.isPremium,
         res,
       );
       await this.audit.createAuditLog(
         AuditActions.SUCCESS,
         `User logged in ${user.email}`,
       );
-      return { id: user.id, email: user.email, role: user.role };
+      return {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        isPremium: user.isPremium,
+      };
     } catch (error) {
       await this.audit.createAuditLog(
         AuditActions.ERROR,
@@ -108,6 +120,7 @@ export class AuthService implements IAuthInterface {
       newUser.id,
       newUser.email,
       newUser.role,
+      newUser.isPremium,
     );
 
     await this.jwtTokenService.updateRtHash(newUser.id, tokens.refreshToken);
@@ -115,6 +128,7 @@ export class AuthService implements IAuthInterface {
       newUser.id,
       newUser.email,
       newUser.role,
+      newUser.isPremium,
       res,
     );
   }
