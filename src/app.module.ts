@@ -1,12 +1,6 @@
 import { LibsModule } from '@libs/libs.module';
-import { AuthModule } from '@modules/auth/auth.module';
 import { RolesGuard } from '@modules/auth/guard/roles.guard';
-import { ExercisesModule } from '@modules/exercises/exercises.module';
-import { MealsModule } from '@modules/meals/meals.module';
 import { NotificationsModule } from '@modules/notifications/notifications.module';
-import { NutritionModule } from '@modules/nutrition/nutrition.module';
-import { UsersModule } from '@modules/users/users.module';
-import { WorkoutsModule } from '@modules/workouts/workouts.module';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -17,6 +11,7 @@ import { HttpExceptionFilter } from '@shared/exceptions';
 import { LoggingInterceptor } from '@shared/interceptors';
 
 import { AppController } from './app.controller';
+import { UsersModules } from './modules';
 
 @Module({
   imports: [
@@ -27,14 +22,9 @@ import { AppController } from './app.controller';
     JwtModule.register({}),
     TerminusModule,
     HttpModule,
-    AuthModule,
-    UsersModule,
-    WorkoutsModule,
-    ExercisesModule,
-    NutritionModule,
-    MealsModule,
     NotificationsModule,
     LibsModule,
+    ...UsersModules,
   ],
   controllers: [AppController],
   providers: [
