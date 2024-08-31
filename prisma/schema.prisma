@@ -15,19 +15,21 @@ datasource db {
 }
 
 model User {
-  id         Int             @unique @default(autoincrement())
-  email      String          @unique
-  password   String
-  firstName  String
-  lastName   String
-  isPremium  Boolean         @default(false)
-  role       RoleEnum        @default(USER)
-  hashRt     String?
-  resetCode  String?
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @updatedAt
-  healthData UserHealthData?
-  userAim    UserAim?
+  id                    Int                    @unique @default(autoincrement())
+  email                 String                 @unique
+  password              String
+  firstName             String
+  lastName              String
+  isPremium             Boolean                @default(false)
+  role                  RoleEnum               @default(USER)
+  hashRt                String?
+  resetCode             String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  healthData            UserHealthData?
+  userAim               UserAim?
+  userJournal           UserJournal?
+  UserFavoriteExercises UserFavoriteExercises?
 
   @@index([email, id], type: BTree)
 }
@@ -61,26 +63,43 @@ model UserAim {
 }
 
 model Exercise {
-  id             Int              @unique @default(autoincrement())
-  name           String
-  image          String?
-  video          String?
-  description    String
-  instructions   String
-  difficulty     DifficultyLevels
-  groupOfMuscles MuscleGroup
-  repeats        Int?
-  sets           Int?
-  duration       Int
-  equipment      Boolean
-  place          Place
-  rating         Float
-  likes          Int
-  dislikes       Int
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id                    Int                     @unique @default(autoincrement())
+  name                  String
+  image                 String?
+  video                 String?
+  description           String
+  instructions          String
+  difficulty            DifficultyLevels
+  groupOfMuscles        MuscleGroup
+  repeats               Int?
+  sets                  Int?
+  duration              Int
+  equipment             Boolean
+  place                 Place
+  rating                Float
+  likes                 Int
+  dislikes              Int
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  UserFavoriteExercises UserFavoriteExercises[]
 
   @@index([name, id], type: BTree)
+}
+
+// todo design journal
+model UserJournal {
+  id        Int      @unique @default(autoincrement())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
+  createdAt DateTime @default(now())
+}
+
+model UserFavoriteExercises {
+  id         Int      @unique @default(autoincrement())
+  User       User     @relation(fields: [userId], references: [id])
+  userId     Int      @unique
+  Exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int
 }
 
 enum UserAimEnum {

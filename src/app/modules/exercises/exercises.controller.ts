@@ -1,5 +1,19 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Version,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Exercise } from '@prisma/client';
+import { Role } from '@shared/decorators';
+import { Roles } from '@shared/types';
 
 import { ExercisesService } from './exercises.service';
 
@@ -9,13 +23,15 @@ export class ExercisesController {
   constructor(private readonly exercisesService: ExercisesService) {}
 
   @Get()
-  public async getAllExercises(): Promise<string[]> {
-    return ['Hello World!'];
+  public async getAllExercises(): Promise<Exercise[] | null> {
+    return await this.exercisesService.getAllExercises();
   }
 
   @Get(':id')
-  public async getExerciseById(): Promise<string> {
-    return 'Hello World!';
+  public async getExerciseById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Exercise | null> {
+    return await this.exercisesService.getExerciseById(id);
   }
 
   @Post('add-exercise-to-favorite/:id')
@@ -39,28 +55,39 @@ export class ExercisesController {
   }
 
   // share-exercise link will be generated and returned
+  @Version('2')
   @Get('share-exercise/:id')
   public async getShareExercises(): Promise<string> {
     return 'Hello World!';
   }
 
-  @Post('create-own-exercise')
+  @Post('report-exercise')
   public async reportExercise(): Promise<string> {
     return 'Hello World!';
   }
 
-  @Post()
-  public async createExercise(): Promise<string> {
-    return 'Hello World!';
+  @Role(Roles.ADMIN)
+  @Post('create')
+  public async createExercise(
+    @Body() dto: CreateExerciseDto,
+  ): Promise<Exercise> {
+    return await this.exercisesService.createExercise(dto);
   }
 
+  @Role(Roles.ADMIN)
   @Patch(':id')
-  public async updateExercise(): Promise<string> {
-    return 'Hello World!';
+  public async updateExercise(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: CreateExerciseDto,
+  ): Promise<Exercise> {
+    return await this.exercisesService.updateExercise(id, dto);
   }
 
+  @Role(Roles.ADMIN)
   @Delete(':id')
-  public async deleteExercise(): Promise<string> {
-    return 'Hello World!';
+  public async deleteExercise(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Exercise> {
+    return await this.exercisesService.deleteExercise(id);
   }
 }
