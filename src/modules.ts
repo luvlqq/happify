@@ -1,17 +1,17 @@
-import { AuthModule } from '@modules/auth/auth.module';
-import { ExercisesModule } from '@modules/exercises/exercises.module';
-import { JournalModule } from '@modules/journal/journal.module';
-import { MealsModule } from '@modules/meals/meals.module';
-import { NutritionModule } from '@modules/nutrition/nutrition.module';
-import { UsersModule } from '@modules/users/users.module';
-import { WorkoutsModule } from '@modules/workouts/workouts.module';
+import { AuthModule } from '@domain/auth/auth.module';
+import { MealModule } from '@domain/meal/meal/meal.module';
+import { NutritionModule } from '@domain/meal/nutrition/nutrition.module';
+import { JournalModule } from '@domain/user/journal/journal.module';
+import { UserModule } from '@domain/user/user/user.module';
+import { ExerciseModule } from '@domain/workout/exercise/exercise.module';
+import { WorkoutModule } from '@domain/workout/workout/workout.module';
 
 export const UsersModules = [
   AuthModule,
-  UsersModule,
-  WorkoutsModule,
-  ExercisesModule,
+  UserModule,
+  WorkoutModule,
+  ExerciseModule,
   NutritionModule,
-  MealsModule,
+  MealModule,
   JournalModule,
 ];

@@ -19,28 +19,40 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@libs": [
-        "src/libs"
+        "src/application/shared/services"
       ],
       "@libs/*": [
-        "src/libs/*"
+        "src/application/shared/services/*"
       ],
       "@shared": [
-        "src/app/shared"
+        "src/application/shared"
       ],
       "@shared/*": [
-        "src/app/shared/*"
+        "src/application/shared/*"
       ],
       "@utils": [
-        "src/utils"
+        "src/application/shared/utils"
       ],
       "@utils/*": [
-        "src/utils/*"
+        "src/application/shared/utils/*"
       ],
-      "@modules": [
-        "src/app/modules"
+      "@domain": [
+        "src/domain"
       ],
-      "@modules/*": [
-        "src/app/modules/*"
+      "@domain/*": [
+        "src/domain/*"
+      ],
+      "@infrastructure": [
+        "src/infrastructure"
+      ],
+      "@infrastructure/*": [
+        "src/infrastructure/*"
+      ],
+      "@interfaces": [
+        "src/interfaces"
+      ],
+      "@interfaces/*": [
+        "src/interfaces/*"
       ]
     }
   }

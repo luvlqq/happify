@@ -9,7 +9,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { HttpExceptionFilter } from '@shared/exceptions';
-import { setupSwagger, sigInt, sigTerm } from '@utils';
+import { setupSwagger, sigInt, sigTerm } from 'src/application/shared/utils';
 
 import { AppModule } from './app.module';
 

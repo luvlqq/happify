@@ -1,6 +1,4 @@
-import { LibsModule } from '@libs/libs.module';
-import { RolesGuard } from '@modules/auth/guard/roles.guard';
-import { NotificationsModule } from '@modules/notifications/notifications.module';
+import { RolesGuard } from '@domain/auth/guard/roles.guard';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -9,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { TerminusModule } from '@nestjs/terminus';
 import { HttpExceptionFilter } from '@shared/exceptions';
 import { LoggingInterceptor } from '@shared/interceptors';
+import { LibsModule } from '@shared/services/libs.module';
+import { NotificationsModule } from '@shared/services/notification/notifications.module';
 
 import { AppController } from './app.controller';
 import { UsersModules } from './modules';
