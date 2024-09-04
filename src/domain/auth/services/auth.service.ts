@@ -1,3 +1,4 @@
+import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { LoginDto } from '@interfaces/dto/login.dto';
 import { RegisterDto } from '@interfaces/dto/register.dto';
 import { AuditService } from '@libs/audit/audit.service';
@@ -14,7 +15,6 @@ import { FastifyReply } from 'fastify';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
-import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { IAuthInterface } from '../types';
 import { JwtTokensService } from './jwt-tokens.service';
 

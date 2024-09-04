@@ -1,6 +1,5 @@
 import { JwtAuthGuard } from '@domain/auth/guard';
 import { AuthService } from '@domain/auth/services/auth.service';
-import { AuthSwaggerLogin, AuthSwaggerRegister } from '@domain/auth/swagger';
 import { IAuthInterface } from '@domain/auth/types';
 import { LoginDto } from '@interfaces/dto/login.dto';
 import { RegisterDto } from '@interfaces/dto/register.dto';
@@ -16,6 +15,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GetUserData, Role } from '@shared/decorators';
+import {
+  AuthSwaggerLogin,
+  AuthSwaggerRegister,
+} from '@shared/swagger/auth.swagger';
 import { Roles } from '@shared/types';
 import { FastifyReply } from 'fastify';
 

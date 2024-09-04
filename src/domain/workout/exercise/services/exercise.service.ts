@@ -1,10 +1,9 @@
+import { ExerciseRepository } from '@infrastructure/database/repositories/exercise.repository';
 import { CreateExerciseDto } from '@interfaces/dto/create-exercise.dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { Exercise } from '@prisma/client';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
-
-import { ExerciseRepository } from '@infrastructure/database/repositories/exercise.repository';
 
 @Injectable()
 export class ExerciseService {

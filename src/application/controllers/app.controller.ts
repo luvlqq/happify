@@ -1,3 +1,4 @@
+import { PrismaService } from '@libs/prisma/prisma.service';
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { RedisOptions, Transport } from '@nestjs/microservices';
@@ -9,7 +10,6 @@ import {
   MicroserviceHealthIndicator,
   PrismaHealthIndicator,
 } from '@nestjs/terminus';
-import { PrismaService } from '@libs/prisma/prisma.service';
 
 @ApiTags('Health')
 @Controller('health')

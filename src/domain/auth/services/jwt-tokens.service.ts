@@ -1,3 +1,4 @@
+import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import {
   BadRequestException,
   Injectable,
@@ -8,7 +9,6 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { FastifyReply } from 'fastify';
 
-import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { Tokens } from '../types';
 
 @Injectable()

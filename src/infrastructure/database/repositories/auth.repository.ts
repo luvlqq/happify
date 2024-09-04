@@ -1,3 +1,4 @@
+import { AuthRepositoryInterface } from '@domain/auth/repositories/auth-repository.interface';
 import { RegisterDto } from '@interfaces/dto/register.dto';
 import { PrismaService } from '@libs/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
@@ -5,7 +6,6 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
 import { User } from '.prisma/client';
-import {AuthRepositoryInterface} from "@domain/auth/repositories/auth-repository.interface";
 
 @Injectable()
 export class AuthRepository implements AuthRepositoryInterface {

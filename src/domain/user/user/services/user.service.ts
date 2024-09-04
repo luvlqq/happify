@@ -1,11 +1,10 @@
+import { UserRepository } from '@infrastructure/database/repositories/user.repository';
 import { UpdateUserHealthData } from '@interfaces/dto/user.health.dto';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { User, UserHealthData } from '@prisma/client';
 import { calculateUserAge, calculateUserBmi } from '@utils/utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
-
-import { UserRepository } from '@infrastructure/database/repositories/user.repository';
 
 @Injectable()
 export class UserService {
