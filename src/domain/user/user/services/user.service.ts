@@ -5,7 +5,7 @@ import { calculateUserAge, calculateUserBmi } from '@utils/utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
-import { UserRepository } from '../repositories/user.repository';
+import { UserRepository } from '@infrastructure/database/repositories/user.repository';
 
 @Injectable()
 export class UserService {

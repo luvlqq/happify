@@ -6,7 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from '../../application/controllers/auth.controller';
 import { JwtAuthGuard, JwtRefreshGuard } from './guard';
 import { IsPremiumUserGuard } from './guard/isPremiumUser.guard';
-import { AuthRepository } from './repositories/auth.repository';
+import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { AuthService } from './services/auth.service';
 import { JwtTokensService } from './services/jwt-tokens.service';
 import { AtStrategy, RtStrategy } from './strategies';

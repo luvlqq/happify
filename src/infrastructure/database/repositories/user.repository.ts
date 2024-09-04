@@ -1,3 +1,4 @@
+import { UserRepositoryInterface } from '@domain/user/user/repositories/user-repository.interface';
 import { UpdateUserHealthData } from '@interfaces/dto/user.health.dto';
 import { PrismaService } from '@libs/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
@@ -6,7 +7,7 @@ import { UserHealthData } from '@prisma/client';
 import { User } from '.prisma/client';
 
 @Injectable()
-export class UserRepository {
+export class UserRepository implements UserRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   /**

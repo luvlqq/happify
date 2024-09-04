@@ -10,7 +10,7 @@ import { LoggingInterceptor } from '@shared/interceptors';
 import { LibsModule } from '@shared/services/libs.module';
 import { NotificationsModule } from '@shared/services/notification/notifications.module';
 
-import { AppController } from './app.controller';
+import { AppController } from './application/controllers/app.controller';
 import { UsersModules } from './modules';
 
 @Module({

@@ -4,7 +4,7 @@ import { Exercise } from '@prisma/client';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
-import { ExerciseRepository } from './exercise.repository';
+import { ExerciseRepository } from '@infrastructure/database/repositories/exercise.repository';
 
 @Injectable()
 export class ExerciseService {

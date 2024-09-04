@@ -14,6 +14,7 @@ import { setupSwagger, sigInt, sigTerm } from 'src/application/shared/utils';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  console.log('TEST')
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),

@@ -9,7 +9,7 @@ import {
   MicroserviceHealthIndicator,
   PrismaHealthIndicator,
 } from '@nestjs/terminus';
-import { PrismaService } from '@shared/services/prisma/prisma.service';
+import { PrismaService } from '@libs/prisma/prisma.service';
 
 @ApiTags('Health')
 @Controller('health')

@@ -1,10 +1,11 @@
+import { ExerciseRepositoryInterface } from '@domain/workout/exercise/repositories/exercise-repository.interface';
 import { CreateExerciseDto } from '@interfaces/dto/create-exercise.dto';
+import { PrismaService } from '@libs/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Exercise } from '@prisma/client';
-import { PrismaService } from '@shared/services/prisma/prisma.service';
 
 @Injectable()
-export class ExerciseRepository {
+export class ExerciseRepository implements ExerciseRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   public async getAllExercises(): Promise<Exercise[]> {

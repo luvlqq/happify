@@ -14,7 +14,7 @@ import { FastifyReply } from 'fastify';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
-import { AuthRepository } from '../repositories/auth.repository';
+import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { IAuthInterface } from '../types';
 import { JwtTokensService } from './jwt-tokens.service';
 

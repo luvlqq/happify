@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { WorkoutService } from '../workout.service';
+import { WorkoutService } from '../services/workout.service';
 
 describe('WorkoutsService', () => {
   let service: WorkoutService;

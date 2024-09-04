@@ -1,4 +1,4 @@
-import { ExerciseService } from '@domain/workout/exercise/exercise.service';
+import { ExerciseService } from '@domain/workout/exercise/services/exercise.service';
 import { CreateExerciseDto } from '@interfaces/dto/create-exercise.dto';
 import {
   Body,

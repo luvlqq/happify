@@ -1,4 +1,4 @@
-import { WorkoutService } from '@domain/workout/workout/workout.service';
+import { WorkoutService } from '@domain/workout/workout/services/workout.service';
 import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 

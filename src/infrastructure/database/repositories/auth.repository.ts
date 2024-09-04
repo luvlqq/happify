@@ -4,11 +4,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
-import { IAuthRepositoryInterface } from '../types';
 import { User } from '.prisma/client';
+import {AuthRepositoryInterface} from "@domain/auth/repositories/auth-repository.interface";
 
 @Injectable()
-export class AuthRepository implements IAuthRepositoryInterface {
+export class AuthRepository implements AuthRepositoryInterface {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     private readonly prisma: PrismaService,
