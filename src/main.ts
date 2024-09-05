@@ -1,7 +1,7 @@
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import multiPart from '@fastify/multipart';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -9,7 +9,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { HttpExceptionFilter } from '@shared/exceptions';
-import { setupSwagger, sigInt, sigTerm } from '@utils';
+import { setupSwagger, sigInt, sigTerm } from 'src/application/shared/utils';
 
 import { AppModule } from './app.module';
 
@@ -31,6 +31,9 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
   await app.register(cookie);
   await app.register(multiPart);
   await app.register(cors, { origin: true, credentials: true });
