@@ -1,15 +1,15 @@
+import { JwtAuthGuard, JwtRefreshGuard } from '@application/guard';
+import { IsPremiumUserGuard } from '@application/guard/isPremiumUser.guard';
+import { AtStrategy, RtStrategy } from '@application/strategies';
+import { AuthController } from '@controllers/auth.controller';
 import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { AuditService } from '@libs/audit/audit.service';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthController } from '../../application/controllers/auth.controller';
-import { JwtAuthGuard, JwtRefreshGuard } from './guard';
-import { IsPremiumUserGuard } from './guard/isPremiumUser.guard';
 import { AuthService } from './services/auth.service';
 import { JwtTokensService } from './services/jwt-tokens.service';
-import { AtStrategy, RtStrategy } from './strategies';
 
 @Module({
   imports: [

@@ -1,3 +1,4 @@
+import { Tokens } from '@domain/auth/types';
 import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import {
   BadRequestException,
@@ -8,8 +9,6 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { FastifyReply } from 'fastify';
-
-import { Tokens } from '../types';
 
 @Injectable()
 export class JwtTokensService {

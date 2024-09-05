@@ -1,6 +1,6 @@
+import { ErrorType } from '@application/types';
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { ErrorType } from '@shared/types';
 
 export function GetUserDataSwagger() {
   return applyDecorators(

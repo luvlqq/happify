@@ -1,4 +1,3 @@
-import { JwtAuthGuard } from '@domain/auth/guard';
 import { AuthService } from '@domain/auth/services/auth.service';
 import { IAuthInterface } from '@domain/auth/types';
 import { LoginDto } from '@interfaces/dto/login.dto';
@@ -14,13 +13,12 @@ import {
   Version,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { GetUserData, Role } from '@shared/decorators';
-import {
-  AuthSwaggerLogin,
-  AuthSwaggerRegister,
-} from '@shared/swagger/auth.swagger';
-import { Roles } from '@shared/types';
 import { FastifyReply } from 'fastify';
+import { GetUserData, Role } from 'src/application/decorators';
+import { JwtAuthGuard } from 'src/application/guard';
+import { Roles } from 'src/application/types';
+
+import { AuthSwaggerLogin, AuthSwaggerRegister } from '../swagger/auth.swagger';
 
 @ApiTags('Auth')
 @Controller('auth')

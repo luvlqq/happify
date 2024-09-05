@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Exercise } from '@prisma/client';
-import { Role } from '@shared/decorators';
-import { Roles } from '@shared/types';
+import { Role } from 'src/application/decorators';
+import { Roles } from 'src/application/types';
 
 @ApiTags('Exercises')
 @Controller('exercises')

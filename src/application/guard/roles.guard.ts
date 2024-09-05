@@ -1,7 +1,7 @@
+import { RoleType } from '@application/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { RoleType } from '@shared/types';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

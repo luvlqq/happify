@@ -1,6 +1,7 @@
-import { BackupsService } from '@libs/backups/backups.service';
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
+
+import { BackupsService } from './backups.service';
 
 @Module({
   imports: [ScheduleModule.forRoot()],

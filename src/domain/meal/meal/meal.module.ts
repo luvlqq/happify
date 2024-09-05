@@ -1,6 +1,6 @@
+import { MealController } from '@controllers/meal.controller';
 import { Module } from '@nestjs/common';
 
-import { MealController } from '../../../application/controllers/meal.controller';
 import { MealService } from './services/meal.service';
 
 @Module({

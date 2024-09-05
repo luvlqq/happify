@@ -1,6 +1,6 @@
+import { appendCurrentDateToFile } from '@application/utils';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { appendCurrentDateToFile } from '@shared/utils/utils';
 import * as AWS from 'aws-sdk';
 import { Readable } from 'stream';
 

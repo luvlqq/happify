@@ -1,6 +1,7 @@
-import { AuditService } from '@libs/audit/audit.service';
+import { PrismaService } from '@libs/prisma/prisma.service';
 import { Global, Module } from '@nestjs/common';
-import { PrismaService } from '@shared/services/prisma/prisma.service';
+
+import { AuditService } from './audit.service';
 
 @Global()
 @Module({

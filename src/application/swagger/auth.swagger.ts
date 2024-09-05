@@ -1,8 +1,8 @@
+import { ErrorType } from '@application/types';
 import { LoginDto } from '@interfaces/dto/login.dto';
 import { RegisterDto } from '@interfaces/dto/register.dto';
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { ErrorType } from '@shared/types';
 
 export function AuthSwaggerLogin() {
   return applyDecorators(
