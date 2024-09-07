@@ -3,7 +3,7 @@ import { IsPremiumUserGuard } from '@application/guard/isPremiumUser.guard';
 import { AtStrategy, RtStrategy } from '@application/strategies';
 import { AuthController } from '@controllers/auth.controller';
 import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
-import { AuditService } from '@libs/audit/audit.service';
+import { AuditService } from '@libs/audit/services/audit.service';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';

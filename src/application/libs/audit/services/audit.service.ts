@@ -2,7 +2,7 @@ import { PrismaService } from '@libs/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Audit } from '@prisma/client';
 
-import { AuditAction } from './types';
+import { AuditAction } from '../types';
 
 @Injectable()
 export class AuditService {
