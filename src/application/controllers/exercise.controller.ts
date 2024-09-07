@@ -1,5 +1,6 @@
 import { ExerciseService } from '@domain/workout/exercise/services/exercise.service';
 import { CreateExerciseDto } from '@interfaces/dto/create-exercise.dto';
+import { Roles } from '@interfaces/types';
 import {
   Body,
   Controller,
@@ -14,7 +15,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Exercise } from '@prisma/client';
 import { Role } from 'src/application/decorators';
-import { Roles } from 'src/application/types';
 
 @ApiTags('Exercises')
 @Controller('exercises')

@@ -1,5 +1,5 @@
+import { RoleType } from '@interfaces/types';
 import { SetMetadata } from '@nestjs/common';
-import { RoleType } from 'src/application/types';
 
 /**
  * Role decorator

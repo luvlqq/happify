@@ -1,4 +1,4 @@
-import { ErrorType } from '@application/types';
+import { ErrorType } from '@interfaces/types';
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 

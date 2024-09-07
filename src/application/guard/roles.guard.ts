@@ -1,4 +1,4 @@
-import { RoleType } from '@application/types';
+import { RoleType } from '@interfaces/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
