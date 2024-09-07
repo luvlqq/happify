@@ -1,4 +1,4 @@
-import { CookingLevel, DietType, MealType } from '@interfaces/enum';
+import { CookingLevelEnum, DietTypeEnum, MealTypeEnum } from '@interfaces/enum';
 import {
   Column,
   CreateDateColumn,
@@ -35,17 +35,17 @@ export class Meal {
   @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
   fiber: number;
 
-  @Column({ type: 'varchar', enum: MealType })
-  meal_type: MealType;
+  @Column({ type: 'varchar', enum: MealTypeEnum })
+  meal_type: MealTypeEnum;
 
-  @Column({ type: 'varchar', enum: DietType })
-  diet_type: DietType;
+  @Column({ type: 'varchar', enum: DietTypeEnum })
+  diet_type: DietTypeEnum;
 
   @Column({ type: 'int' })
   preparation_time: number;
 
-  @Column({ type: 'varchar', enum: CookingLevel })
-  difficulty_level: CookingLevel;
+  @Column({ type: 'varchar', enum: CookingLevelEnum })
+  difficulty_level: CookingLevelEnum;
 
   @Column({ type: 'varchar', nullable: true })
   image_url: string;

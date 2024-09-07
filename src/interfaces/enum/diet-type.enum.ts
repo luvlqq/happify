@@ -1,4 +1,4 @@
-export enum DietType {
+export enum DietTypeEnum {
   KETO = 'KETO',
   VEGAN = 'VEGAN',
   VEGETARIAN = 'VEGETARIAN',
