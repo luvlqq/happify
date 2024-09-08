@@ -1,6 +1,10 @@
+import { User } from '@domain/user/user/entities/user.entity';
+import { UserHealth } from '@domain/user/user/entities/user-health.entity';
+import { Audit } from '@libs/audit/entity/audit.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+//todo: переписать с использованием ConfigService
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -10,7 +14,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [Audit, User, UserHealth],
+      synchronize: true,
     }),
   ],
 })

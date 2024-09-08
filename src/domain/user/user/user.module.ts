@@ -1,9 +1,9 @@
+import { UserController } from '@controllers/user.controller';
 import { UserRepository } from '@infrastructure/database/repositories/user.repository';
+import { WinstonLoggerModule } from '@libs';
+import { PrismaService } from '@libs/prisma/prisma.service';
 import { Module } from '@nestjs/common';
-import { WinstonLoggerModule } from '@shared/services';
-import { PrismaService } from '@shared/services/prisma/prisma.service';
 
-import { UserController } from '../../../application/controllers/user.controller';
 import { UserService } from './services/user.service';
 
 @Module({

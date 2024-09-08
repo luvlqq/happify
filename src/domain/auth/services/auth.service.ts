@@ -1,7 +1,7 @@
 import { AuthRepository } from '@infrastructure/database/repositories/auth.repository';
 import { LoginDto } from '@interfaces/dto/login.dto';
 import { RegisterDto } from '@interfaces/dto/register.dto';
-import { AuditService } from '@libs/audit/audit.service';
+import { AuditService } from '@libs/audit/services/audit.service';
 import { AuditActions } from '@libs/audit/types';
 import {
   BadRequestException,

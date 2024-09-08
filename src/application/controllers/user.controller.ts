@@ -1,4 +1,3 @@
-import { JwtAuthGuard } from '@domain/auth/guard';
 import { UserService } from '@domain/user/user/services/user.service';
 import { UpdateUserHealthData } from '@interfaces/dto/user.health.dto';
 import {
@@ -13,11 +12,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User, UserHealthData } from '@prisma/client';
-import { GetUserData } from '@shared/decorators';
+import { GetUserData } from 'src/application/decorators';
+import { JwtAuthGuard } from 'src/application/guard';
+
 import {
   GetUserDataSwagger,
   SetterUserHealthDataSwagger,
-} from '@shared/swagger/users.swagger';
+} from '../swagger/users.swagger';
 
 @ApiTags('Users')
 @UseGuards(JwtAuthGuard)

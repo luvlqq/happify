@@ -8,8 +8,8 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { HttpExceptionFilter } from '@shared/exceptions';
-import { setupSwagger, sigInt, sigTerm } from 'src/application/shared/utils';
+import { HttpExceptionFilter } from 'src/application/exceptions';
+import { setupSwagger, sigInt, sigTerm } from 'src/application/utils';
 
 import { AppModule } from './app.module';
 
